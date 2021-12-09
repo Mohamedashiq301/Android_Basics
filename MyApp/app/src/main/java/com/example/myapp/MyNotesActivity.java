@@ -4,7 +4,9 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
@@ -13,13 +15,13 @@ import android.widget.TextView;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
-import java.util.Objects;
 
 public class MyNotesActivity extends AppCompatActivity {
 
     String fullname;
     FloatingActionButton fabAddNotes;
     TextView textViewTitle,textViewDescription;
+    SharedPreferences sharedPreferences;
 
 
     @Override
@@ -27,7 +29,12 @@ public class MyNotesActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_my_notes);
         bindView();
-        getintentData();
+        setSharedPreference();
+
+        Intent intent=getIntent();
+        fullname=intent.getStringExtra(AppConstant.Full_Name);
+        if (TextUtils.isEmpty(fullname)) {
+            fullname = sharedPreferences.getString(PrefConstant.full_name,"");
 
         fabAddNotes.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -38,9 +45,10 @@ public class MyNotesActivity extends AppCompatActivity {
         getSupportActionBar().setTitle(fullname);
     }
 
-    private void getintentData() {
-        Intent intent=getIntent();
-        fullname=intent.getStringExtra(AppConstant.Full_Name);
+    }
+
+    private void setSharedPreference() {
+        sharedPreferences=getSharedPreferences(PrefConstant.Shared_Preference_Notes,MODE_PRIVATE);
     }
 
     private void bindView() {
