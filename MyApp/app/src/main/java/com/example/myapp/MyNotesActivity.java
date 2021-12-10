@@ -2,6 +2,7 @@ package com.example.myapp;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -13,16 +14,19 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.example.myapp.model.Notes;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+
+import java.util.ArrayList;
 
 
 public class MyNotesActivity extends AppCompatActivity {
 
     String fullname;
     FloatingActionButton fabAddNotes;
-    TextView textViewTitle,textViewDescription;
     SharedPreferences sharedPreferences;
-
+    RecyclerView recyclerviewNotes;
+    ArrayList<Notes> notesList = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,8 +57,7 @@ public class MyNotesActivity extends AppCompatActivity {
 
     private void bindView() {
         fabAddNotes=findViewById(R.id.fabAddNotes);
-        textViewTitle=findViewById(R.id.textViewTitle);
-        textViewDescription=findViewById(R.id.textViewDescription);
+        recyclerviewNotes=findViewById(R.id.recyclerviewNotes);
     }
 
     private void setupDialogBox() {
@@ -71,8 +74,12 @@ public class MyNotesActivity extends AppCompatActivity {
         SubmitButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                textViewTitle.setText(EditTextTitle.getText().toString());
-                textViewDescription.setText(EditTextDescription.getText().toString());
+            String title=EditTextTitle.getText().toString();
+            String description=EditTextDescription.getText().toString();
+            Notes notes=new Notes();
+            notes.setTitle(title);
+            notes.setDescription(description);
+            notesList.add(notes);
                 dialog.hide();
             }
         });
