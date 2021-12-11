@@ -2,6 +2,7 @@ package com.example.myapp;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
@@ -14,6 +15,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.example.myapp.Adapter.NotesAdapter;
 import com.example.myapp.model.Notes;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
@@ -80,10 +82,21 @@ public class MyNotesActivity extends AppCompatActivity {
             notes.setTitle(title);
             notes.setDescription(description);
             notesList.add(notes);
+
+            setupRecyclerView();
+
                 dialog.hide();
             }
         });
         dialog.show();
 
+    }
+
+    private void setupRecyclerView() {
+        NotesAdapter notesAdapter=new NotesAdapter(notesList);
+        LinearLayoutManager linearLayoutManager=new LinearLayoutManager(MyNotesActivity.this);
+        linearLayoutManager.setOrientation(linearLayoutManager.VERTICAL);
+        recyclerviewNotes.setLayoutManager(linearLayoutManager);
+        recyclerviewNotes.setAdapter(notesAdapter);
     }
 }
