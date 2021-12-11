@@ -14,8 +14,10 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.myapp.Adapter.NotesAdapter;
+import com.example.myapp.clicklinstener.ItemClickListener;
 import com.example.myapp.model.Notes;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
@@ -78,10 +80,15 @@ public class MyNotesActivity extends AppCompatActivity {
             public void onClick(View v) {
             String title=EditTextTitle.getText().toString();
             String description=EditTextDescription.getText().toString();
+            if(!TextUtils.isEmpty(title) && !TextUtils.isEmpty(description)){
             Notes notes=new Notes();
             notes.setTitle(title);
             notes.setDescription(description);
             notesList.add(notes);
+            }else{
+                Toast.makeText(MyNotesActivity.this, "Title and Description can't be empty", Toast.LENGTH_SHORT).show();
+            }
+            
 
             setupRecyclerView();
 
@@ -93,7 +100,20 @@ public class MyNotesActivity extends AppCompatActivity {
     }
 
     private void setupRecyclerView() {
-        NotesAdapter notesAdapter=new NotesAdapter(notesList);
+
+        //Interface
+        ItemClickListener itemClickListener=new ItemClickListener() {
+            @Override
+            public void onClick(Notes notes) {
+                Intent intent=new Intent(MyNotesActivity.this,DetailActivity.class);
+                intent.putExtra(AppConstant.TITLE,notes.getTitle());
+                intent.putExtra(AppConstant.DESCRIPTION,notes.getDescription());
+                startActivity(intent);
+            }
+        };
+
+
+        NotesAdapter notesAdapter=new NotesAdapter(notesList,itemClickListener);
         LinearLayoutManager linearLayoutManager=new LinearLayoutManager(MyNotesActivity.this);
         linearLayoutManager.setOrientation(linearLayoutManager.VERTICAL);
         recyclerviewNotes.setLayoutManager(linearLayoutManager);

@@ -8,16 +8,21 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.myapp.MyNotesActivity;
 import com.example.myapp.R;
+import com.example.myapp.clicklinstener.ItemClickListener;
 import com.example.myapp.model.Notes;
 
 import java.util.List;
 
 public class NotesAdapter extends RecyclerView.Adapter<NotesAdapter.ViewHolder>{
 
-    List<Notes> listnotes;
-    public NotesAdapter(List<Notes>list){
+    private List<Notes> listnotes;
+    private ItemClickListener itemClickListener;
+
+    public NotesAdapter(List<Notes>list,ItemClickListener itemClickListener){
         this.listnotes=list;
+        this.itemClickListener=itemClickListener;
     }
         @NonNull
         @Override
@@ -33,6 +38,12 @@ public class NotesAdapter extends RecyclerView.Adapter<NotesAdapter.ViewHolder>{
                 String description=notes.getDescription();
                 holder.textViewTitle.setText(title);
                 holder.textViewDescription.setText(description);
+                holder.itemView.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        itemClickListener.onClick(notes);
+                    }
+                });
         }
 
         @Override
