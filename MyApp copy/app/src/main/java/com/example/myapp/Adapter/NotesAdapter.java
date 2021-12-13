@@ -8,9 +8,8 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.myapp.MyNotesActivity;
 import com.example.myapp.R;
-import com.example.myapp.clicklinstener.ItemClickListener;
+import com.example.myapp.clicklinstener.itemClickListener;
 import com.example.myapp.model.Notes;
 
 import java.util.List;
@@ -18,9 +17,9 @@ import java.util.List;
 public class NotesAdapter extends RecyclerView.Adapter<NotesAdapter.ViewHolder>{
 
     private List<Notes> listnotes;
-    private ItemClickListener itemClickListener;
+    private com.example.myapp.clicklinstener.itemClickListener itemClickListener;
 
-    public NotesAdapter(List<Notes>list,ItemClickListener itemClickListener){
+    public NotesAdapter(List<Notes>list,itemClickListener itemClickListener){
         this.listnotes=list;
         this.itemClickListener=itemClickListener;
     }

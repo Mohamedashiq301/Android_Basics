@@ -13,11 +13,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.myapp.Adapter.NotesAdapter;
-import com.example.myapp.clicklinstener.ItemClickListener;
+import com.example.myapp.clicklinstener.itemClickListener;
 import com.example.myapp.model.Notes;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
@@ -102,7 +101,7 @@ public class MyNotesActivity extends AppCompatActivity {
     private void setupRecyclerView() {
 
         //Interface
-        ItemClickListener itemClickListener=new ItemClickListener() {
+        itemClickListener itemClickListener=new itemClickListener() {
             @Override
             public void onClick(Notes notes) {
                 Intent intent=new Intent(MyNotesActivity.this,DetailActivity.class);
