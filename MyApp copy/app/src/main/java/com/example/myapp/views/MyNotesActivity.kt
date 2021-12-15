@@ -1,4 +1,4 @@
-package com.example.myapp
+package com.example.myapp.views
 
 import android.content.Intent
 import android.content.SharedPreferences
@@ -13,6 +13,9 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.myapp.Adapter.NotesAdapter
+import com.example.myapp.utils.AppConstant
+import com.example.myapp.utils.PrefConstant
+import com.example.myapp.R
 import com.example.myapp.clicklinstener.itemClickListener
 import com.example.myapp.model.Notes
 import com.google.android.material.floatingactionbutton.FloatingActionButton
@@ -68,7 +71,7 @@ class MyNotesActivity : AppCompatActivity(){
     private fun setRecyclerView() {
         val itemClickListener=object:itemClickListener{
             override fun onClick(notes: Notes) {
-                val intent= Intent(this@MyNotesActivity,DetailActivity::class.java)
+                val intent= Intent(this@MyNotesActivity, DetailActivity::class.java)
                 intent.putExtra(AppConstant.TITLE,notes.title)
                 intent.putExtra(AppConstant.DESCRIPTION,notes.description)
                 startActivity(intent)

@@ -1,4 +1,4 @@
-package com.example.myapp
+package com.example.myapp.views
 
 import android.content.Intent
 import android.content.SharedPreferences
@@ -7,6 +7,8 @@ import android.view.View
 import android.widget.Button
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
+import com.example.myapp.utils.PrefConstant
+import com.example.myapp.R
 import kotlinx.android.synthetic.main.activity_login.*
 
 class LoginActivity : AppCompatActivity(){
@@ -38,7 +40,7 @@ class LoginActivity : AppCompatActivity(){
                 val fullName=EditTextFullName.text.toString()
                 val userName=EditTextUserName.text.toString()
                 if(fullName.isNotEmpty() && userName.isNotEmpty()){
-                    val intent=Intent(this@LoginActivity,MyNotesActivity::class.java)
+                    val intent=Intent(this@LoginActivity, MyNotesActivity::class.java)
                     startActivity(intent)
                     saveFullName(fullName)
                     saveLoginStatus()

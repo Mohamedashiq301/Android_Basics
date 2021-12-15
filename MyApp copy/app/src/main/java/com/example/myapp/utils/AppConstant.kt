@@ -1,4 +1,4 @@
-package com.example.myapp
+package com.example.myapp.utils
 
 object AppConstant {
     const val Full_Name = "fullname"

@@ -3,6 +3,8 @@ package com.example.myapp.Adapter
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.CheckBox
+import android.widget.CompoundButton
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.myapp.R
@@ -22,8 +24,13 @@ class NotesAdapter(val list: List<Notes>,val itemClickListener: itemClickListene
         holder.textViewTitle.text=title
         holder.textViewDescription.text=description
         holder.itemView.setOnClickListener(object : View.OnClickListener {
-            override fun onClick(p0: View?) {
+            override fun onClick(v: View?) {
                 itemClickListener.onClick(notes)
+            }
+        })
+        holder.checkBoxMarkStatus.setOnCheckedChangeListener(object:CompoundButton.OnCheckedChangeListener{
+            override fun onCheckedChanged(p0: CompoundButton?, p1: Boolean) {
+                itemClickListener.onUpdate(notes)
             }
 
         })
@@ -35,6 +42,7 @@ class NotesAdapter(val list: List<Notes>,val itemClickListener: itemClickListene
     inner class ViewHolder(itemView:View):RecyclerView.ViewHolder(itemView){
         val textViewTitle:TextView=itemView.findViewById(R.id.textViewTitle)
         val textViewDescription:TextView=itemView.findViewById(R.id.textViewDescription)
+        val checkBoxMarkStatus:CheckBox=itemView.findViewById(R.id.checkboxMarkStatus)
     }
 
 }

@@ -14,7 +14,7 @@
         <entry key="app/src/main/res/layout/activity_my_notes.xml" value="0.1" />
         <entry key="app/src/main/res/layout/activity_splash.xml" value="0.18342391304347827" />
         <entry key="app/src/main/res/layout/add_notes_dialog_layout.xml" value="0.1" />
-        <entry key="app/src/main/res/layout/notes_adapter_layout.xml" value="0.1" />
+        <entry key="app/src/main/res/layout/notes_adapter_layout.xml" value="0.22" />
       </map>
     </option>
   </component>

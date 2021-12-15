@@ -1,11 +1,10 @@
-package com.example.myapp
+package com.example.myapp.views
 
-import android.accounts.AuthenticatorDescription
-import android.nfc.Tag
 import android.os.Bundle
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
-import com.google.android.material.tabs.TabLayout
+import com.example.myapp.utils.AppConstant
+import com.example.myapp.R
 
 class DetailActivity : AppCompatActivity(){
 
