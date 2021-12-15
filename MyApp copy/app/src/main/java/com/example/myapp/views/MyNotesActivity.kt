@@ -13,11 +13,13 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.myapp.Adapter.NotesAdapter
+import com.example.myapp.NotesApp
 import com.example.myapp.utils.AppConstant
 import com.example.myapp.utils.PrefConstant
 import com.example.myapp.R
 import com.example.myapp.clicklinstener.itemClickListener
-import com.example.myapp.model.Notes
+import com.example.myapp.db.Notes
+import com.example.myapp.db.NotesDae
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 
 class MyNotesActivity : AppCompatActivity(){
@@ -56,16 +58,25 @@ class MyNotesActivity : AppCompatActivity(){
                 val title=EditTextTitle.text.toString()
                 val description=EditTextDescription.text.toString()
                 if (title.isNotEmpty() && description.isNotEmpty()){
-                    val notes=Notes(title, description)
+                    val notes=Notes(title=title, description=description)
                     notesList.add(notes)
+                    addNotesToDb(notes)
+                    setRecyclerView()
+                    dialog.hide()
                 }else{
                     Toast.makeText(this@MyNotesActivity,"Title and Description can't be Empty",Toast.LENGTH_SHORT).show()
                 }
-                setRecyclerView()
+
 
             }
 
         })
+    }
+
+    private fun addNotesToDb(notes: Notes) {
+        val notesApp=application as NotesApp
+        val notesDao=notesApp.getNotesDb().notesDao()
+        notesDao.insert(notes)
     }
 
     private fun setRecyclerView() {
@@ -75,6 +86,10 @@ class MyNotesActivity : AppCompatActivity(){
                 intent.putExtra(AppConstant.TITLE,notes.title)
                 intent.putExtra(AppConstant.DESCRIPTION,notes.description)
                 startActivity(intent)
+            }
+
+            override fun onUpdate(notes: Notes) {
+
             }
 
         }

@@ -9,9 +9,10 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.myapp.R
 import com.example.myapp.clicklinstener.itemClickListener
-import com.example.myapp.model.Notes
+import com.example.myapp.db.Notes
 
-class NotesAdapter(val list: List<Notes>,val itemClickListener: itemClickListener):RecyclerView.Adapter<NotesAdapter.ViewHolder>(){
+
+class NotesAdapter(val list: List<Notes>, val itemClickListener: itemClickListener):RecyclerView.Adapter<NotesAdapter.ViewHolder>(){
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.notes_adapter_layout,parent,false)
         return ViewHolder(view)
