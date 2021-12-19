@@ -5,16 +5,19 @@ import android.content.SharedPreferences
 import android.os.Bundle
 import android.view.View
 import android.widget.Button
+import android.widget.EditText
 import android.widget.TextView
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.example.myapp.utils.PrefConstant
 import com.example.myapp.R
 import kotlinx.android.synthetic.main.activity_login.*
+import java.time.Duration
 
 class LoginActivity : AppCompatActivity(){
 
-    lateinit var EditTextFullName: TextView
-    lateinit var EditTextUserName: TextView
+    lateinit var EditTextFullName: EditText
+    lateinit var EditTextUserName: EditText
     lateinit var buttonLogin:Button
     lateinit var sharedPreferences: SharedPreferences
     lateinit var editor: SharedPreferences.Editor
@@ -45,7 +48,7 @@ class LoginActivity : AppCompatActivity(){
                     saveFullName(fullName)
                     saveLoginStatus()
                 }else{
-
+                    Toast.makeText(this@LoginActivity,"FullName and UserName can't be empty",Toast.LENGTH_SHORT).show()
                 }
             }
 
@@ -61,7 +64,7 @@ class LoginActivity : AppCompatActivity(){
 
     private fun saveFullName(fullName: String) {
         editor=sharedPreferences.edit()
-        editor.putString("fullName",fullName)
+        editor.putString(PrefConstant.full_name,fullName)
         editor.apply()
     }
 }

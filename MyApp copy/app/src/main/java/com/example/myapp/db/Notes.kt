@@ -9,7 +9,7 @@ import androidx.room.PrimaryKey
 data class Notes(
 
     @PrimaryKey(autoGenerate = true)
-    var id:Int?=null,
+    var id: Int ?=null,
     @ColumnInfo(name = "title")
     var title:String="",
     @ColumnInfo(name= "description")

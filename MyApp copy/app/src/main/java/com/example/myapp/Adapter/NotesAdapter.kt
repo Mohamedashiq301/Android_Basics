@@ -13,6 +13,7 @@ import com.example.myapp.db.Notes
 
 
 class NotesAdapter(val list: List<Notes>, val itemClickListener: itemClickListener):RecyclerView.Adapter<NotesAdapter.ViewHolder>(){
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.notes_adapter_layout,parent,false)
         return ViewHolder(view)
@@ -24,13 +25,15 @@ class NotesAdapter(val list: List<Notes>, val itemClickListener: itemClickListen
         val description=notes.description
         holder.textViewTitle.text=title
         holder.textViewDescription.text=description
+        holder.checkBoxMarkStatus.isChecked=notes.isTaskCompleted
         holder.itemView.setOnClickListener(object : View.OnClickListener {
             override fun onClick(v: View?) {
                 itemClickListener.onClick(notes)
             }
         })
         holder.checkBoxMarkStatus.setOnCheckedChangeListener(object:CompoundButton.OnCheckedChangeListener{
-            override fun onCheckedChanged(p0: CompoundButton?, p1: Boolean) {
+            override fun onCheckedChanged(buttonView: CompoundButton?, isChecked: Boolean) {
+                notes.isTaskCompleted=isChecked
                 itemClickListener.onUpdate(notes)
             }
 

@@ -1,7 +1,7 @@
 package com.example.myapp.utils
 
 object AppConstant {
-    const val Full_Name = "fullname"
-    const val TITLE = "title"
-    const val DESCRIPTION = "description"
+    val Full_Name = "fullName"
+    val TITLE = "title"
+    val DESCRIPTION = "description"
 }
