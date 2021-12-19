@@ -10,9 +10,9 @@ import android.widget.TextView
 import com.example.myapp.R
 
 class AddNotesActivity : AppCompatActivity() {
-    lateinit var  EditTextTitle: EditText
-    lateinit var EditTextDescription:TextView
-    lateinit var submitButton:Button
+    lateinit var EditTextTitle: EditText
+    lateinit var EditTextDescription: TextView
+    lateinit var submitButton: Button
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -22,7 +22,7 @@ class AddNotesActivity : AppCompatActivity() {
     }
 
     private fun clickListener() {
-        submitButton.setOnClickListener(object:View.OnClickListener{
+        submitButton.setOnClickListener(object : View.OnClickListener {
             override fun onClick(v: View?) {
 
             }
@@ -31,8 +31,8 @@ class AddNotesActivity : AppCompatActivity() {
     }
 
     private fun bindViews() {
-        EditTextTitle=findViewById(R.id.EditTextTitle)
-        EditTextDescription=findViewById(R.id.EditTextDescription)
-        submitButton=findViewById(R.id.SubmitButton)
+        EditTextTitle = findViewById(R.id.EditTextTitle)
+        EditTextDescription = findViewById(R.id.EditTextDescription)
+        submitButton = findViewById(R.id.SubmitButton)
     }
 }

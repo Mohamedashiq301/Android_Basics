@@ -5,13 +5,13 @@
     android:layout_height="match_parent">
 
     <TextView
+        android:id="@+id/TextView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="Add Notes"
         android:textAlignment="center"
-        android:textStyle="bold"
         android:textSize="20dp"
-        android:id="@+id/TextView"/>
+        android:textStyle="bold" />
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/TextInputTitle"
@@ -29,7 +29,7 @@
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/EditTextTitle"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
+            android:layout_height="wrap_content" />
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
@@ -48,22 +48,21 @@
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/EditTextDescription"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
+            android:layout_height="wrap_content" />
     </com.google.android.material.textfield.TextInputLayout>
 
-   <com.google.android.material.button.MaterialButton
-       android:id="@+id/submitButton"
-       android:layout_width="match_parent"
-       android:layout_height="wrap_content"
-       android:layout_marginStart="8dp"
-       android:layout_marginTop="8dp"
-       android:layout_marginEnd="8dp"
-       android:hint="Submit"
-       app:layout_constraintEnd_toEndOf="parent"
-       app:layout_constraintStart_toStartOf="parent"
-       android:textColor="@color/design_default_color_primary_dark"
-       app:layout_constraintTop_toBottomOf="@+id/TextInputDescription"/>
-
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/submitButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:hint="Submit"
+        android:textColor="@color/design_default_color_primary_dark"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/TextInputDescription" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

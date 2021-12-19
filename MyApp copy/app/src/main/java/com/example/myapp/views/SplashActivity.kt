@@ -9,7 +9,7 @@ import com.example.myapp.R
 
 class SplashActivity : AppCompatActivity() {
 
-    lateinit var sharedPreferences:SharedPreferences
+    lateinit var sharedPreferences: SharedPreferences
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -19,17 +19,16 @@ class SplashActivity : AppCompatActivity() {
     }
 
 
-
     private fun setupSharedPreference() {
-        sharedPreferences=getSharedPreferences(PrefConstant.Shared_Preference_Notes, MODE_PRIVATE)
+        sharedPreferences = getSharedPreferences(PrefConstant.Shared_Preference_Notes, MODE_PRIVATE)
     }
 
     private fun checkLoginStatus() {
-        val isLoggedin =sharedPreferences.getBoolean(PrefConstant.Is_Logged_In,false)
-        if(isLoggedin){
+        val isLoggedin = sharedPreferences.getBoolean(PrefConstant.Is_Logged_In, false)
+        if (isLoggedin) {
             val intent = Intent(this@SplashActivity, MyNotesActivity::class.java)
             startActivity(intent)
-        }else{
+        } else {
             val intent = Intent(this@SplashActivity, LoginActivity::class.java)
             startActivity(intent)
         }
