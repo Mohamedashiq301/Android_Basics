@@ -1,9 +1,11 @@
 package com.example.myapp.views
 
+import android.app.Activity
 import android.app.AlertDialog
 import android.content.Intent
 import android.content.SharedPreferences
 import android.os.Bundle
+import android.text.TextUtils
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -11,6 +13,7 @@ import android.widget.Button
 import android.widget.EditText
 import android.widget.TextView
 import android.widget.Toast
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -19,9 +22,11 @@ import com.example.myapp.NotesApp
 import com.example.myapp.R
 import com.example.myapp.clicklinstener.itemClickListener
 import com.example.myapp.db.Notes
+import com.example.myapp.db.NotesDae
 import com.example.myapp.utils.AppConstant
 import com.example.myapp.utils.PrefConstant
 import com.google.android.material.floatingactionbutton.FloatingActionButton
+import kotlinx.android.synthetic.main.activity_my_notes.*
 
 class MyNotesActivity :AppCompatActivity(){
     lateinit var fullName: String
@@ -41,46 +46,66 @@ class MyNotesActivity :AppCompatActivity(){
         setupToolBarText()
         setupRecyclerView()
 
+
         fabAddNotes.setOnClickListener(object : View.OnClickListener {
             override fun onClick(p0: View?) {
-                setupDialogBox()
-            }
+                var launchSomeActivity = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+                    if (result.resultCode == Activity.RESULT_OK) {
+                        val data: Intent? = result.data
+                        val title=data?.getStringExtra(AppConstant.TITLE)
+                        val description=data?.getStringExtra(AppConstant.DESCRIPTION)
 
-        })
-    }
+                        val notesApp=application as NotesApp
+                        val notesDae=notesApp.getNotesDb().notesDao()
+                        val notes=Notes(title = title!!, description = description!!)
 
-    private fun setupDialogBox() {
-        val view = LayoutInflater.from(this@MyNotesActivity)
-            .inflate(R.layout.add_notes_dialog_layout, null)
-
-        val EditTextTitle = view.findViewById<EditText>(R.id.EditTextTitle)
-        val EditTextDescription = view.findViewById<EditText>(R.id.EditTextDescription)
-        val submitButton = view.findViewById<Button>(R.id.submitButton)
-        val dialog = AlertDialog.Builder(this)
-            .setView(view)
-            .setCancelable(false)
-            .create()
-        submitButton.setOnClickListener(object : View.OnClickListener {
-            override fun onClick(p0: View?) {
-                val title = EditTextTitle.text.toString()
-                val description = EditTextDescription.text.toString()
-                val notes = Notes(title = title, description = description)
-                if (title.isNotEmpty() && description.isNotEmpty()) {
-                    notesList.add(notes)
-                } else {
-                    Toast.makeText(
-                        this@MyNotesActivity,
-                        "Title and description can't be empty",
-                        Toast.LENGTH_SHORT
-                    ).show()
+                        notesList.add(notes)
+                        notesDae.insert(notes)
+                        recyclerviewNotes.adapter?.notifyItemChanged(notesList.size-1)
+                    }
                 }
-                getNotesToDb(notes)
-                dialog.hide()
-            }
-        })
-        dialog.show()
 
+                fun openYourActivity() {
+                    val intent = Intent(this@MyNotesActivity, AddNotesActivity::class.java)
+                    launchSomeActivity.launch(intent)
+                }
+            }
+
+        })
     }
+
+//    private fun setupDialogBox() {
+//        val view = LayoutInflater.from(this@MyNotesActivity)
+//            .inflate(R.layout.add_notes_dialog_layout, null)
+//
+//        val EditTextTitle = view.findViewById<EditText>(R.id.EditTextTitle)
+//        val EditTextDescription = view.findViewById<EditText>(R.id.EditTextDescription)
+//        val submitButton = view.findViewById<Button>(R.id.submitButton)
+//        val dialog = AlertDialog.Builder(this)
+//            .setView(view)
+//            .setCancelable(false)
+//            .create()
+//        submitButton.setOnClickListener(object : View.OnClickListener {
+//            override fun onClick(p0: View?) {
+//                val title = EditTextTitle.text.toString()
+//                val description = EditTextDescription.text.toString()
+//                val notes = Notes(title = title, description = description)
+//                if (title.isNotEmpty() && description.isNotEmpty()) {
+//                    notesList.add(notes)
+//                } else {
+//                    Toast.makeText(
+//                        this@MyNotesActivity,
+//                        "Title and description can't be empty",
+//                        Toast.LENGTH_SHORT
+//                    ).show()
+//                }
+//                getNotesToDb(notes)
+//                dialog.hide()
+//            }
+//        })
+//        dialog.show()
+//
+//    }
 
     private fun getNotesToDb(notes: Notes) {
         val notesApp = applicationContext as NotesApp
@@ -113,9 +138,19 @@ class MyNotesActivity :AppCompatActivity(){
     }
 
     private fun setupToolBarText() {
-        if (supportActionBar != null) {
-            supportActionBar?.title = fullName
-        }
+//        val loginIntent=intent
+//        var fullName=""
+//        if(loginIntent.hasExtra(AppConstant.Full_Name)){
+//            fullName=loginIntent.getStringExtra(AppConstant.Full_Name).toString()
+//            if (TextUtils.isEmpty(fullName)){
+//                fullName=sharedPreferences.getString(PrefConstant.full_name,"")!!
+//            }
+//        }
+//        if (!TextUtils.isEmpty(fullName)) {
+            if (supportActionBar != null) {
+                supportActionBar?.title = fullName
+            }
+  //      }
     }
 
     private fun getDataFromDataBase() {

@@ -1,5 +1,7 @@
 package com.example.myapp.views
 
+import android.app.Activity
+import android.content.Intent
 import android.icu.text.CaseMap
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -8,6 +10,7 @@ import android.widget.Button
 import android.widget.EditText
 import android.widget.TextView
 import com.example.myapp.R
+import com.example.myapp.utils.AppConstant
 
 class AddNotesActivity : AppCompatActivity() {
     lateinit var EditTextTitle: EditText
@@ -24,7 +27,10 @@ class AddNotesActivity : AppCompatActivity() {
     private fun clickListener() {
         submitButton.setOnClickListener(object : View.OnClickListener {
             override fun onClick(v: View?) {
-
+                val intent=Intent()
+                intent.putExtra(AppConstant.TITLE,EditTextTitle.text.toString())
+                intent.putExtra(AppConstant.DESCRIPTION,EditTextDescription.text.toString())
+                setResult(Activity.RESULT_OK,intent)
             }
 
         })
