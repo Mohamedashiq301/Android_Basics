@@ -49,6 +49,7 @@ class MyNotesActivity :AppCompatActivity(){
 
         fabAddNotes.setOnClickListener(object : View.OnClickListener {
             override fun onClick(p0: View?) {
+
                 var launchSomeActivity = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
                     if (result.resultCode == Activity.RESULT_OK) {
                         val data: Intent? = result.data
@@ -65,10 +66,9 @@ class MyNotesActivity :AppCompatActivity(){
                     }
                 }
 
-                fun openYourActivity() {
                     val intent = Intent(this@MyNotesActivity, AddNotesActivity::class.java)
                     launchSomeActivity.launch(intent)
-                }
+
             }
 
         })
