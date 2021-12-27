@@ -11,7 +11,7 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.example.myapp.utils.PrefConstant
 import com.example.myapp.R
-import kotlinx.android.synthetic.main.activity_login.*
+//import kotlinx.android.synthetic.main.activity_login.*
 import java.time.Duration
 
 class LoginActivity : AppCompatActivity() {

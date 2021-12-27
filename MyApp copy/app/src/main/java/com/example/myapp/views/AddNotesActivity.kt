@@ -31,6 +31,7 @@ class AddNotesActivity : AppCompatActivity() {
                 intent.putExtra(AppConstant.TITLE,EditTextTitle.text.toString())
                 intent.putExtra(AppConstant.DESCRIPTION,EditTextDescription.text.toString())
                 setResult(Activity.RESULT_OK,intent)
+                finish()
             }
 
         })

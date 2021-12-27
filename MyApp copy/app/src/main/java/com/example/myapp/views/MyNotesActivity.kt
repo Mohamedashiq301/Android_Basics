@@ -26,7 +26,7 @@ import com.example.myapp.db.NotesDae
 import com.example.myapp.utils.AppConstant
 import com.example.myapp.utils.PrefConstant
 import com.google.android.material.floatingactionbutton.FloatingActionButton
-import kotlinx.android.synthetic.main.activity_my_notes.*
+//import kotlinx.android.synthetic.main.activity_my_notes.*
 
 class MyNotesActivity :AppCompatActivity(){
     lateinit var fullName: String
@@ -46,27 +46,25 @@ class MyNotesActivity :AppCompatActivity(){
         setupToolBarText()
         setupRecyclerView()
 
+        var launchSomeActivity = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+            if (result.resultCode == Activity.RESULT_OK) {
+                val data: Intent? = result.data
+                val title=data?.getStringExtra(AppConstant.TITLE)
+                val description=data?.getStringExtra(AppConstant.DESCRIPTION)
 
+                val notesApp=application as NotesApp
+                val notesDae=notesApp.getNotesDb().notesDao()
+                val notes=Notes(title = title!!, description = description!!)
+
+                notesList.add(notes)
+                notesDae.insert(notes)
+                getNotesToDb(notes)
+                recyclerView.adapter?.notifyItemChanged(notesList.size-1)
+            }
+        }
         fabAddNotes.setOnClickListener(object : View.OnClickListener {
             override fun onClick(p0: View?) {
-
-                var launchSomeActivity = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
-                    if (result.resultCode == Activity.RESULT_OK) {
-                        val data: Intent? = result.data
-                        val title=data?.getStringExtra(AppConstant.TITLE)
-                        val description=data?.getStringExtra(AppConstant.DESCRIPTION)
-
-                        val notesApp=application as NotesApp
-                        val notesDae=notesApp.getNotesDb().notesDao()
-                        val notes=Notes(title = title!!, description = description!!)
-
-                        notesList.add(notes)
-                        notesDae.insert(notes)
-                        recyclerviewNotes.adapter?.notifyItemChanged(notesList.size-1)
-                    }
-                }
-
-                    val intent = Intent(this@MyNotesActivity, AddNotesActivity::class.java)
+                val intent = Intent(this@MyNotesActivity, AddNotesActivity::class.java)
                     launchSomeActivity.launch(intent)
 
             }
