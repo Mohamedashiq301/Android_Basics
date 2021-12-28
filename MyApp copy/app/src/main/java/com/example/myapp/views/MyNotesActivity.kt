@@ -55,10 +55,20 @@ class MyNotesActivity :AppCompatActivity(){
                 val notesApp=application as NotesApp
                 val notesDae=notesApp.getNotesDb().notesDao()
                 val notes=Notes(title = title!!, description = description!!)
+                if (title.isNotEmpty() && description.isNotEmpty()) {
+                   notesList.add(notes)
+                } else {
+                    Toast.makeText(
+                        this@MyNotesActivity,
+                        "Title and description can't be empty",
+                        Toast.LENGTH_SHORT
+                    ).show()
+                }
 
-                notesList.add(notes)
+
+                //notesList.add(notes)
                 notesDae.insert(notes)
-                getNotesToDb(notes)
+                //getNotesToDb(notes)
                 recyclerView.adapter?.notifyItemChanged(notesList.size-1)
             }
         }
@@ -105,11 +115,11 @@ class MyNotesActivity :AppCompatActivity(){
 //
 //    }
 
-    private fun getNotesToDb(notes: Notes) {
-        val notesApp = applicationContext as NotesApp
-        val notesDae = notesApp.getNotesDb().notesDao()
-        notesDae.insert(notes)
-    }
+//    private fun getNotesToDb(notes: Notes) {
+//        val notesApp = applicationContext as NotesApp
+//        val notesDae = notesApp.getNotesDb().notesDao()
+//        notesDae.insert(notes)
+//    }
 
     private fun setupRecyclerView() {
         val ItemClickListener = object : itemClickListener {
