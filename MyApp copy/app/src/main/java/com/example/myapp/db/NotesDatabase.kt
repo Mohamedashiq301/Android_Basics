@@ -5,17 +5,17 @@ import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
 
-@Database(entities = [Notes::class], version = 1)
-abstract class NotesDatabase:RoomDatabase(){
-    abstract fun notesDao():NotesDae
+@Database(entities = [Notes::class], version = 1, exportSchema = false)
+abstract class NotesDatabase : RoomDatabase() {
+    abstract fun notesDao(): NotesDae
 
-    companion object{
+    companion object {
         lateinit var INSTANCE: NotesDatabase
-        fun getInstance(context: Context):NotesDatabase {
-            synchronized(NotesDatabase::class){
-                INSTANCE=Room.databaseBuilder(context.applicationContext,NotesDatabase::class.java,"my-notes.db")
-                    .allowMainThreadQueries()
-                    .build()
+        fun getInstance(context: Context): NotesDatabase {
+            synchronized(NotesDatabase::class) {
+                INSTANCE = Room.databaseBuilder(context.applicationContext, NotesDatabase::class.java, "my-notes.db")
+                        .allowMainThreadQueries()
+                        .build()
             }
             return INSTANCE
         }
