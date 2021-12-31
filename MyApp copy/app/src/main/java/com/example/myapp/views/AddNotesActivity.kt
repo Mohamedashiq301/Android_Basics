@@ -4,6 +4,7 @@ import android.app.Activity
 import android.app.AlertDialog
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.graphics.Bitmap
 import android.os.Bundle
 import android.os.Environment
 import android.provider.MediaStore
@@ -13,7 +14,6 @@ import android.widget.Button
 import android.widget.EditText
 import android.widget.ImageView
 import android.widget.TextView
-import androidx.activity.result.ActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
@@ -26,11 +26,13 @@ import java.io.File
 import java.util.*
 import kotlin.collections.ArrayList
 
+
 class AddNotesActivity : AppCompatActivity() {
     lateinit var EditTextTitle: EditText
     lateinit var EditTextDescription: TextView
     lateinit var submitButton: Button
     lateinit var imageviewEditor: ImageView
+
     val REQUEST_CODE_GALLERY = 2
     val REQUEST_CODE_CAMERA = 1
     val MY_PERMISSION_CODE=124
@@ -81,6 +83,7 @@ class AddNotesActivity : AppCompatActivity() {
         return true
     }
 
+
     override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
         when(requestCode){
@@ -100,6 +103,11 @@ class AddNotesActivity : AppCompatActivity() {
                 .setView(view)
                 .setCancelable(true)
                 .create()
+
+        val resultActivity=registerForActivityResult(ActivityResultContracts.StartActivityForResult()){
+            val bitmap=it?.data?.extras?.get("data") as Bitmap
+            imageviewEditor.setImageBitmap(bitmap)
+        }
         textViewCamera.setOnClickListener(object : View.OnClickListener {
             override fun onClick(v: View?) {
                 val takePictureIntent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
@@ -117,23 +125,24 @@ class AddNotesActivity : AppCompatActivity() {
                                 BuildConfig.APPLICATION_ID + ".provider",
                                 photoFile)
                         takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoUri)
-                        startActivityForResult(takePictureIntent, REQUEST_CODE_CAMERA)
+                       // startActivityForResult(takePictureIntent, REQUEST_CODE_CAMERA)
+                      resultActivity.launch(intent)
                     }
                 }
             }
         })
 
+        val startForResult=registerForActivityResult(ActivityResultContracts.GetContent().ActivityResultCallback{
+
+        })
+
         textViewGallery.setOnClickListener(object : View.OnClickListener {
             override fun onClick(v: View?) {
                 //val intent = Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
-                //startActivityForResult(intent, REQUEST_CODE_GALLERY)
-                var startForResult = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result: ActivityResult ->
-                    if (result.resultCode == Activity.RESULT_OK) {
-                        val data: Intent? = result.data
+               // startActivityForResult(intent, REQUEST_CODE_GALLERY)
 
-                    }
-                }
-                startForResult.launch(Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI))
+                val intent=Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
+               startForResult.launch(intent)
                 dialog.hide()
             }
         })
