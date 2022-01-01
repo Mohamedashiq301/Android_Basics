@@ -33,8 +33,8 @@ class AddNotesActivity : AppCompatActivity() {
     lateinit var submitButton: Button
     lateinit var imageviewEditor: ImageView
 
-    val REQUEST_CODE_GALLERY = 2
-    val REQUEST_CODE_CAMERA = 1
+//    val REQUEST_CODE_GALLERY = 2
+//    val REQUEST_CODE_CAMERA = 1
     val MY_PERMISSION_CODE=124
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -132,9 +132,10 @@ class AddNotesActivity : AppCompatActivity() {
             }
         })
 
-        val startForResult=registerForActivityResult(ActivityResultContracts.GetContent().ActivityResultCallback{
-
-        })
+        val startForResult=registerForActivityResult(ActivityResultContracts.StartActivityForResult()){
+            val bitmap=it?.data?.extras?.get("data") as Bitmap
+            imageviewEditor.setImageBitmap(bitmap)
+        }
 
         textViewGallery.setOnClickListener(object : View.OnClickListener {
             override fun onClick(v: View?) {
