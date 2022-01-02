@@ -120,6 +120,7 @@ class AddNotesActivity : AppCompatActivity() {
                     val resultActivity = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
                         val bitmap = it?.data?.extras?.get("data") as Bitmap
                         imageviewEditor.setImageBitmap(bitmap)
+                        picturePath=imageLocation?.path.toString()
                         Glide.with(this@AddNotesActivity).load(imageLocation.absoluteFile).into(imageviewEditor)
                     }
 
@@ -129,6 +130,7 @@ class AddNotesActivity : AppCompatActivity() {
                                 photoFile)
                         imageLocation = photoFile
                         takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoUri)
+                        dialog.hide()
                         // startActivityForResult(takePictureIntent, REQUEST_CODE_CAMERA)
                         resultActivity.launch(intent)
                     }
