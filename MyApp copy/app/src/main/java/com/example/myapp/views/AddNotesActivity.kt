@@ -19,12 +19,12 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.core.content.FileProvider
+import com.bumptech.glide.Glide
 import com.example.myapp.BuildConfig
 import com.example.myapp.R
 import com.example.myapp.utils.AppConstant
 import java.io.File
 import java.util.*
-import kotlin.collections.ArrayList
 
 
 class AddNotesActivity : AppCompatActivity() {
@@ -33,9 +33,17 @@ class AddNotesActivity : AppCompatActivity() {
     lateinit var submitButton: Button
     lateinit var imageviewEditor: ImageView
 
+<<<<<<< HEAD
 //    val REQUEST_CODE_GALLERY = 2
 //    val REQUEST_CODE_CAMERA = 1
     val MY_PERMISSION_CODE=124
+=======
+    //val REQUEST_CODE_GALLERY = 2
+    //val REQUEST_CODE_CAMERA = 1
+    val MY_PERMISSION_CODE = 124
+    var picturePath = ""
+    lateinit var imageLocation: File
+>>>>>>> 1477b0a2a862f6a9a049fdb44a64cbbd032fb8bc
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -58,7 +66,7 @@ class AddNotesActivity : AppCompatActivity() {
         imageviewEditor.setOnClickListener(object : View.OnClickListener {
             override fun onClick(v: View?) {
                 if (checkAndRequestPermission()) {
-                    setupDialog()
+                setupDialog()
                 }
             }
 
@@ -66,10 +74,10 @@ class AddNotesActivity : AppCompatActivity() {
     }
 
     private fun checkAndRequestPermission(): Boolean {
-        val permissionCamera=ContextCompat.checkSelfPermission(this,android.Manifest.permission.CAMERA)
+        val permissionCamera= ContextCompat.checkSelfPermission(this,android.Manifest.permission.CAMERA)
         val storagePermission=ContextCompat.checkSelfPermission(this,android.Manifest.permission.READ_EXTERNAL_STORAGE)
         val listPermissionNeeded=ArrayList<String>()
-        if (storagePermission!=PackageManager.PERMISSION_GRANTED){
+        if (storagePermission!= PackageManager.PERMISSION_GRANTED){
                 listPermissionNeeded.add(android.Manifest.permission.READ_EXTERNAL_STORAGE)
         }
         if (permissionCamera!=PackageManager.PERMISSION_GRANTED){
@@ -82,7 +90,6 @@ class AddNotesActivity : AppCompatActivity() {
         }
         return true
     }
-
 
     override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
@@ -104,10 +111,7 @@ class AddNotesActivity : AppCompatActivity() {
                 .setCancelable(true)
                 .create()
 
-        val resultActivity=registerForActivityResult(ActivityResultContracts.StartActivityForResult()){
-            val bitmap=it?.data?.extras?.get("data") as Bitmap
-            imageviewEditor.setImageBitmap(bitmap)
-        }
+
         textViewCamera.setOnClickListener(object : View.OnClickListener {
             override fun onClick(v: View?) {
                 val takePictureIntent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
@@ -119,31 +123,46 @@ class AddNotesActivity : AppCompatActivity() {
                     } catch (e: Exception) {
 
                     }
+                    val resultActivity = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
+                        val bitmap = it?.data?.extras?.get("data") as Bitmap
+                        imageviewEditor.setImageBitmap(bitmap)
+                        Glide.with(this@AddNotesActivity).load(imageLocation.absoluteFile).into(imageviewEditor)
+                    }
 
                     if (photoFile != null) {
                         val photoUri = FileProvider.getUriForFile(this@AddNotesActivity,
                                 BuildConfig.APPLICATION_ID + ".provider",
                                 photoFile)
+                        imageLocation = photoFile
                         takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoUri)
-                       // startActivityForResult(takePictureIntent, REQUEST_CODE_CAMERA)
-                      resultActivity.launch(intent)
+                        // startActivityForResult(takePictureIntent, REQUEST_CODE_CAMERA)
+                        resultActivity.launch(intent)
                     }
                 }
             }
         })
 
+<<<<<<< HEAD
         val startForResult=registerForActivityResult(ActivityResultContracts.StartActivityForResult()){
             val bitmap=it?.data?.extras?.get("data") as Bitmap
             imageviewEditor.setImageBitmap(bitmap)
+=======
+        val startForResult = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
+            val bitmap = it?.data?.extras?.get("data") as Bitmap
+            imageviewEditor.setImageBitmap(bitmap)
+            var selectImage = intent?.data
+            picturePath=selectImage.toString()
+            Glide.with(this).load(selectImage?.path).into(imageviewEditor)
+>>>>>>> 1477b0a2a862f6a9a049fdb44a64cbbd032fb8bc
         }
 
         textViewGallery.setOnClickListener(object : View.OnClickListener {
             override fun onClick(v: View?) {
                 //val intent = Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
-               // startActivityForResult(intent, REQUEST_CODE_GALLERY)
+                // startActivityForResult(intent, REQUEST_CODE_GALLERY)
 
-                val intent=Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
-               startForResult.launch(intent)
+                val intent = Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
+                startForResult.launch(intent)
                 dialog.hide()
             }
         })
