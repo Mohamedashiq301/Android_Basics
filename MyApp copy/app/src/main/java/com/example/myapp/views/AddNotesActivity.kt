@@ -4,7 +4,6 @@ import android.app.Activity
 import android.app.AlertDialog
 import android.content.Intent
 import android.content.pm.PackageManager
-import android.graphics.Bitmap
 import android.os.Bundle
 import android.os.Environment
 import android.provider.MediaStore
@@ -14,7 +13,6 @@ import android.widget.Button
 import android.widget.EditText
 import android.widget.ImageView
 import android.widget.TextView
-import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
@@ -33,8 +31,8 @@ class AddNotesActivity : AppCompatActivity() {
     lateinit var submitButton: Button
     lateinit var imageviewEditor: ImageView
 
-    //val REQUEST_CODE_GALLERY = 2
-    //val REQUEST_CODE_CAMERA = 1
+    val REQUEST_CODE_GALLERY = 2
+    val REQUEST_CODE_CAMERA = 1
     val MY_PERMISSION_CODE = 124
     var picturePath = ""
     lateinit var imageLocation: File
@@ -52,6 +50,7 @@ class AddNotesActivity : AppCompatActivity() {
                 val intent = Intent()
                 intent.putExtra(AppConstant.TITLE, EditTextTitle.text.toString())
                 intent.putExtra(AppConstant.DESCRIPTION, EditTextDescription.text.toString())
+                intent.putExtra(AppConstant.imagePath,picturePath)
                 setResult(Activity.RESULT_OK, intent)
                 finish()
             }
@@ -60,7 +59,7 @@ class AddNotesActivity : AppCompatActivity() {
         imageviewEditor.setOnClickListener(object : View.OnClickListener {
             override fun onClick(v: View?) {
                 if (checkAndRequestPermission()) {
-                setupDialog()
+                    setupDialog()
                 }
             }
 
@@ -68,18 +67,18 @@ class AddNotesActivity : AppCompatActivity() {
     }
 
     private fun checkAndRequestPermission(): Boolean {
-        val permissionCamera= ContextCompat.checkSelfPermission(this,android.Manifest.permission.CAMERA)
-        val storagePermission=ContextCompat.checkSelfPermission(this,android.Manifest.permission.READ_EXTERNAL_STORAGE)
-        val listPermissionNeeded=ArrayList<String>()
-        if (storagePermission!= PackageManager.PERMISSION_GRANTED){
-                listPermissionNeeded.add(android.Manifest.permission.READ_EXTERNAL_STORAGE)
+        val permissionCamera = ContextCompat.checkSelfPermission(this, android.Manifest.permission.CAMERA)
+        val storagePermission = ContextCompat.checkSelfPermission(this, android.Manifest.permission.READ_EXTERNAL_STORAGE)
+        val listPermissionNeeded = ArrayList<String>()
+        if (storagePermission != PackageManager.PERMISSION_GRANTED) {
+            listPermissionNeeded.add(android.Manifest.permission.READ_EXTERNAL_STORAGE)
         }
-        if (permissionCamera!=PackageManager.PERMISSION_GRANTED){
+        if (permissionCamera != PackageManager.PERMISSION_GRANTED) {
             listPermissionNeeded.add(android.Manifest.permission.CAMERA)
         }
 
-        if (listPermissionNeeded.isNotEmpty()){
-            ActivityCompat.requestPermissions(this,listPermissionNeeded.toTypedArray<String>(),MY_PERMISSION_CODE)
+        if (listPermissionNeeded.isNotEmpty()) {
+            ActivityCompat.requestPermissions(this, listPermissionNeeded.toTypedArray<String>(), MY_PERMISSION_CODE)
             return false
         }
         return true
@@ -87,9 +86,9 @@ class AddNotesActivity : AppCompatActivity() {
 
     override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
-        when(requestCode){
-            MY_PERMISSION_CODE->{
-                if (grantResults.isNotEmpty() &&grantResults[0]==PackageManager.PERMISSION_GRANTED){
+        when (requestCode) {
+            MY_PERMISSION_CODE -> {
+                if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                     setupDialog()
                 }
             }
@@ -117,12 +116,12 @@ class AddNotesActivity : AppCompatActivity() {
                     } catch (e: Exception) {
 
                     }
-                    val resultActivity = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
-                        val bitmap = it?.data?.extras?.get("data") as Bitmap
-                        imageviewEditor.setImageBitmap(bitmap)
-                        picturePath=imageLocation?.path.toString()
-                        Glide.with(this@AddNotesActivity).load(imageLocation.absoluteFile).into(imageviewEditor)
-                    }
+//                    val resultActivity = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
+//                        val bitmap = it?.data?.extras?.get("data") as Bitmap
+//                        imageviewEditor.setImageBitmap(bitmap)
+//                        picturePath=imageLocation?.path.toString()
+//                        Glide.with(this@AddNotesActivity).load(imageLocation.absoluteFile).into(imageviewEditor)
+//                    }
 
                     if (photoFile != null) {
                         val photoUri = FileProvider.getUriForFile(this@AddNotesActivity,
@@ -131,28 +130,28 @@ class AddNotesActivity : AppCompatActivity() {
                         imageLocation = photoFile
                         takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoUri)
                         dialog.hide()
-                        // startActivityForResult(takePictureIntent, REQUEST_CODE_CAMERA)
-                        resultActivity.launch(intent)
+                        startActivityForResult(takePictureIntent, REQUEST_CODE_CAMERA)
+                        //resultActivity.launch(intent)
                     }
                 }
             }
         })
 
-        val startForResult = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
-            val bitmap = it?.data?.extras?.get("data") as Bitmap
-            imageviewEditor.setImageBitmap(bitmap)
-            var selectImage = intent?.data
-            picturePath=selectImage.toString()
-            Glide.with(this).load(selectImage?.path).into(imageviewEditor)
-        }
+//        val startForResult = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
+//            val bitmap = it?.data?.extras?.get("data") as Bitmap
+//            imageviewEditor.setImageBitmap(bitmap)
+//            var selectImage = intent?.data
+//            picturePath=selectImage.toString()
+//            Glide.with(this).load(selectImage?.path).into(imageviewEditor)
+//        }
 
         textViewGallery.setOnClickListener(object : View.OnClickListener {
             override fun onClick(v: View?) {
-                //val intent = Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
-                // startActivityForResult(intent, REQUEST_CODE_GALLERY)
-
                 val intent = Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
-                startForResult.launch(intent)
+                startActivityForResult(intent, REQUEST_CODE_GALLERY)
+
+//                val intent = Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
+//                startForResult.launch(intent)
                 dialog.hide()
             }
         })
@@ -171,5 +170,23 @@ class AddNotesActivity : AppCompatActivity() {
         EditTextDescription = findViewById(R.id.EditTextDescription)
         submitButton = findViewById(R.id.SubmitButton)
         imageviewEditor = findViewById(R.id.imageviewEditor)
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (requestCode == Activity.RESULT_OK) {
+            when (requestCode) {
+                REQUEST_CODE_CAMERA -> {
+                    picturePath = imageLocation.path.toString()
+                    Glide.with(this@AddNotesActivity).load(imageLocation.absoluteFile).into(imageviewEditor)
+                }
+                REQUEST_CODE_GALLERY -> {
+                    val selectImage = data?.data
+                    picturePath = selectImage?.path.toString()
+                    Glide.with(this).load(selectImage?.path).into(imageviewEditor)
+                }
+
+            }
+        }
     }
 }

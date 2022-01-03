@@ -1,17 +1,11 @@
 package com.example.myapp.views
 
 import android.app.Activity
-import android.app.AlertDialog
 import android.content.Intent
 import android.content.SharedPreferences
 import android.os.Bundle
-import android.text.TextUtils
 import android.util.Log
-import android.view.LayoutInflater
 import android.view.View
-import android.widget.Button
-import android.widget.EditText
-import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
@@ -22,7 +16,6 @@ import com.example.myapp.NotesApp
 import com.example.myapp.R
 import com.example.myapp.clicklinstener.itemClickListener
 import com.example.myapp.db.Notes
-import com.example.myapp.db.NotesDae
 import com.example.myapp.utils.AppConstant
 import com.example.myapp.utils.PrefConstant
 import com.google.android.material.floatingactionbutton.FloatingActionButton
@@ -51,10 +44,11 @@ class MyNotesActivity :AppCompatActivity(){
                 val data: Intent? = result.data
                 val title=data?.getStringExtra(AppConstant.TITLE)
                 val description=data?.getStringExtra(AppConstant.DESCRIPTION)
+                val imagePath=data?.getStringArrayExtra(AppConstant.imagePath)
 
                 val notesApp=application as NotesApp
                 val notesDae=notesApp.getNotesDb().notesDao()
-                val notes=Notes(title = title!!, description = description!!)
+                val notes=Notes(title = title!!, description = description!!,imagePath = imagePath.toString())
                 if (title.isNotEmpty() && description.isNotEmpty()) {
                    notesList.add(notes)
                 } else {
