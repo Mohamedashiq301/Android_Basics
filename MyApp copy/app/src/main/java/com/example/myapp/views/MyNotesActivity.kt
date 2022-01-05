@@ -11,14 +11,20 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import androidx.work.Constraints
+import androidx.work.PeriodicWorkRequest
+import androidx.work.WorkManager
 import com.example.myapp.Adapter.NotesAdapter
 import com.example.myapp.NotesApp
 import com.example.myapp.R
+import com.example.myapp.WorkManager.MyWorker
 import com.example.myapp.clicklinstener.itemClickListener
 import com.example.myapp.db.Notes
 import com.example.myapp.utils.AppConstant
 import com.example.myapp.utils.PrefConstant
 import com.google.android.material.floatingactionbutton.FloatingActionButton
+import java.util.concurrent.TimeUnit
+
 //import kotlinx.android.synthetic.main.activity_my_notes.*
 
 class MyNotesActivity :AppCompatActivity(){
@@ -38,6 +44,7 @@ class MyNotesActivity :AppCompatActivity(){
         getDataFromDataBase()
         setupToolBarText()
         setupRecyclerView()
+        setupWorkManager()
 
         var launchSomeActivity = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
             if (result.resultCode == Activity.RESULT_OK) {
@@ -74,6 +81,18 @@ class MyNotesActivity :AppCompatActivity(){
             }
 
         })
+    }
+
+    private fun setupWorkManager() {
+        val constaint=Constraints.Builder()
+                //.setRequiresCharging(true)
+                //.setRequiresBatteryNotLow(true)
+                .build()
+        val request=PeriodicWorkRequest.Builder(MyWorker::class.java,1,TimeUnit.MINUTES)
+                .setConstraints(constaint)
+                .build()
+        WorkManager.getInstance().enqueue(request)
+
     }
 
 //    private fun setupDialogBox() {

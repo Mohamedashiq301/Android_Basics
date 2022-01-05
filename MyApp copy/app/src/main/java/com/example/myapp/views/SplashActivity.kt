@@ -3,9 +3,13 @@ package com.example.myapp.views
 import android.content.Intent
 import android.content.SharedPreferences
 import android.os.Bundle
+import android.util.Log
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import com.example.myapp.utils.PrefConstant
 import com.example.myapp.R
+import com.example.myapp.utils.PrefConstant
+import com.google.android.gms.tasks.OnCompleteListener
+import com.google.firebase.iid.FirebaseInstanceId
 
 class SplashActivity : AppCompatActivity() {
 
@@ -16,6 +20,23 @@ class SplashActivity : AppCompatActivity() {
         setContentView(R.layout.activity_splash)
         setupSharedPreference()
         checkLoginStatus()
+        getFCMToken()
+    }
+
+    private fun getFCMToken() {
+        FirebaseInstanceId.getInstance().instanceId.addOnCompleteListener(OnCompleteListener { task ->
+            if (!task.isSuccessful) {
+                Log.w("SplashActivity", "getInstanceFailed", task.exception)
+                return@OnCompleteListener
+            }
+
+            // Get new FCM registration token
+            val token = task.result?.token
+
+            // Log and toast
+            Log.d("SplashActivity", token.toString())
+            Toast.makeText(baseContext, token, Toast.LENGTH_SHORT).show()
+        })
     }
 
 
