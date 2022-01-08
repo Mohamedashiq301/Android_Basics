@@ -1,25 +1,23 @@
 package com.example.myapp.views
 
 import android.os.Bundle
+import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.example.myapp.Adapter.BlogAdapter
-import com.example.myapp.R
-import com.androidnetworking.error.ANError
-
-import org.json.JSONArray
-
-import com.androidnetworking.interfaces.JSONArrayRequestListener
-
 import com.androidnetworking.AndroidNetworking
 import com.androidnetworking.common.Priority
+import com.androidnetworking.error.ANError
+import com.androidnetworking.interfaces.ParsedRequestListener
+import com.example.myapp.Adapter.BlogAdapter
+import com.example.myapp.R
+import com.example.myapp.model.JsonResponse
 
 
 class BlogActivity : AppCompatActivity() {
 
     lateinit var recyclerviewBlogs:RecyclerView
-
+    val TAG="BlogActivity"
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_blog)
@@ -28,29 +26,31 @@ class BlogActivity : AppCompatActivity() {
     }
 
     private fun getBlogs() {
-        AndroidNetworking.get("https://fierce-cove-29863.herokuapp.com/getAllUsers/{pageNumber}")
-                .setPriority(Priority.LOW)
+        AndroidNetworking.get("https://www.mocky.io/v2/5926ce9d11000096006ccb30")
+                .setPriority(Priority.HIGH)
                 .build()
-                .getAsJSONArray(object : JSONArrayRequestListener {
-                    override fun onResponse(response: JSONArray) {
-                        // do anything with response
+                .getAsObject(JsonResponse::class.java,object:ParsedRequestListener<JsonResponse>{
+                    override fun onResponse(response: JsonResponse?) {
+                        setupRecyclerView(response)
                     }
 
-                    override fun onError(error: ANError) {
-                        // handle error
+                    override fun onError(anError: ANError?) {
+                        Log.d(TAG, anError!!.localizedMessage)
                     }
+
                 })
-    }
+                }
+
 
     private fun bindViews() {
         recyclerviewBlogs=findViewById(R.id.recyclerviewBlogs)
     }
 
-    private fun setupRecyclerView(){
-        val BlogAdapter=BlogAdapter()
+    private fun setupRecyclerView(response: JsonResponse?) {
+        val blogAdapter=BlogAdapter(response!!.data)
         val linearLayoutManager=LinearLayoutManager(this)
         linearLayoutManager.orientation=RecyclerView.VERTICAL
         recyclerviewBlogs.layoutManager=linearLayoutManager
-        recyclerviewBlogs.adapter=BlogAdapter
+        recyclerviewBlogs.adapter=blogAdapter
     }
 }
