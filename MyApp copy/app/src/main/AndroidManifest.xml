@@ -18,12 +18,9 @@
         android:theme="@style/Theme.MyApp">
         <activity
             android:name=".onboarding.OnBroadingActivity"
-            android:exported="true">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
+            android:exported="true"
+            android:theme="@style/NoToolbar">
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
         <activity
             android:name=".views.BlogActivity"
@@ -52,7 +49,11 @@
         <activity
             android:name=".views.SplashActivity"
             android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
 
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
         </activity>
         <activity android:name=".views.LoginActivity" />
         <activity android:name=".views.MainActivity" />

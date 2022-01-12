@@ -11,7 +11,7 @@ import com.example.myapp.R
 
 class OnBroadingTwoFragment : Fragment() {
 
-    lateinit var textViewNext:TextView
+    lateinit var textViewDone:TextView
     lateinit var textViewBack:TextView
     lateinit var onOptionClick:OnOptionClick
 
@@ -32,7 +32,7 @@ class OnBroadingTwoFragment : Fragment() {
     }
 
     private fun bindViews(view: View) {
-        textViewNext=view.findViewById(R.id.textViewNext)
+        textViewDone=view.findViewById(R.id.textViewDone)
         textViewBack=view.findViewById(R.id.textViewBack)
         clickListener()
     }
@@ -45,16 +45,16 @@ class OnBroadingTwoFragment : Fragment() {
 
         })
 
-        textViewNext.setOnClickListener(object:View.OnClickListener{
+        textViewDone.setOnClickListener(object:View.OnClickListener{
             override fun onClick(v: View?) {
-                onOptionClick.onOptionNext()
+                onOptionClick.onOptionDone()
             }
 
         })
     }
     interface OnOptionClick{
         fun onOptionBack()
-        fun onOptionNext()
+        fun onOptionDone()
     }
 
 }
