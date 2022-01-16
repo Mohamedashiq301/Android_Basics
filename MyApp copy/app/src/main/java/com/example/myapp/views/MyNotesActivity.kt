@@ -57,7 +57,7 @@ class MyNotesActivity :AppCompatActivity(){
 
                 val notesApp=application as NotesApp
                 val notesDae=notesApp.getNotesDb().notesDao()
-                val notes=Notes(title = title!!, description = description!!,imagePath = imagePath.toString())
+                val notes=Notes(title = title!!, description = description!!,imagePath = imagePath.toString(),isTaskCompleted = false)
                 if (title.isNotEmpty() && description.isNotEmpty()) {
                    notesList.add(notes)
                 } else {
