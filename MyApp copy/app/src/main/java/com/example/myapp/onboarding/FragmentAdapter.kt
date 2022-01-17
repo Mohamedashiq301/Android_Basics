@@ -1,15 +1,16 @@
 package com.example.myapp.onboarding
 
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.FragmentManager
-import androidx.fragment.app.FragmentStatePagerAdapter
+import androidx.fragment.app.FragmentActivity
+import androidx.viewpager2.adapter.FragmentStateAdapter
 
-class FragmentAdapter(fragmentManager: FragmentManager) : FragmentStatePagerAdapter(fragmentManager) {
-    override fun getCount(): Int {
+class FragmentAdapter(fragmentManager: FragmentActivity) : FragmentStateAdapter(fragmentManager) {
+
+    override fun getItemCount(): Int {
         return 2
     }
 
-    override fun getItem(position: Int): Fragment {
+    override fun createFragment(position: Int): Fragment {
         when (position) {
             0 -> {
                 return OnBroadingOneFragment()
@@ -21,7 +22,6 @@ class FragmentAdapter(fragmentManager: FragmentManager) : FragmentStatePagerAdap
                 return OnBroadingOneFragment()
             }
         }
-
     }
 
 }

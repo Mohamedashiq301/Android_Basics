@@ -19,11 +19,11 @@ import androidx.work.WorkManager
 import com.example.myapp.Adapter.NotesAdapter
 import com.example.myapp.NotesApp
 import com.example.myapp.R
-import com.example.myapp.WorkManager.MyWorker
+import com.example.myapp.utils.WorkManager.MyWorker
 import com.example.myapp.clicklinstener.itemClickListener
-import com.example.myapp.db.Notes
+import com.example.myapp.data.local.db.Notes
 import com.example.myapp.utils.AppConstant
-import com.example.myapp.utils.PrefConstant
+import com.example.myapp.data.local.pref.PrefConstant
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import java.util.concurrent.TimeUnit
 
@@ -57,7 +57,7 @@ class MyNotesActivity :AppCompatActivity(){
 
                 val notesApp=application as NotesApp
                 val notesDae=notesApp.getNotesDb().notesDao()
-                val notes=Notes(title = title!!, description = description!!,imagePath = imagePath.toString(),isTaskCompleted = false)
+                val notes= Notes(title = title!!, description = description!!,imagePath = imagePath.toString(),isTaskCompleted = false)
                 if (title.isNotEmpty() && description.isNotEmpty()) {
                    notesList.add(notes)
                 } else {

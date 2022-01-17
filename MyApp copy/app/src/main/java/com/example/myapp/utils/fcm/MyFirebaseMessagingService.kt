@@ -1,4 +1,4 @@
-package com.example.myapp.fcm
+package com.example.myapp.utils.fcm
 
 import android.app.NotificationChannel
 import android.app.NotificationManager

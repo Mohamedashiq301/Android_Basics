@@ -4,13 +4,17 @@ import android.content.Intent
 import android.content.SharedPreferences
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
-import androidx.viewpager.widget.ViewPager
+import androidx.viewpager2.widget.ViewPager2
 import com.example.myapp.R
-import com.example.myapp.utils.PrefConstant
+import com.example.myapp.data.local.pref.PrefConstant
 import com.example.myapp.views.LoginActivity
 
 class OnBroadingActivity : AppCompatActivity(),OnBroadingOneFragment.OnNextClick,OnBroadingTwoFragment.OnOptionClick {
-    lateinit var viewPager: ViewPager
+    companion object{
+        private const val FIRST_ITEM=0
+        private const val LAST_ITEM=1
+    }
+    lateinit var viewPager: ViewPager2
     lateinit var sharedPreferences: SharedPreferences
     lateinit var editor: SharedPreferences.Editor
 
@@ -27,7 +31,7 @@ class OnBroadingActivity : AppCompatActivity(),OnBroadingOneFragment.OnNextClick
 
     private fun bindview() {
         viewPager=findViewById(R.id.viewPager)
-        val adpater=FragmentAdapter(supportFragmentManager)
+        val adpater=FragmentAdapter(this)
         viewPager.adapter=adpater
     }
 

@@ -6,13 +6,11 @@ import android.os.Bundle
 import android.view.View
 import android.widget.Button
 import android.widget.EditText
-import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import com.example.myapp.utils.PrefConstant
+import com.example.myapp.data.local.pref.PrefConstant
 import com.example.myapp.R
 //import kotlinx.android.synthetic.main.activity_login.*
-import java.time.Duration
 
 class LoginActivity : AppCompatActivity() {
 

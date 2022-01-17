@@ -11,7 +11,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.myapp.R
 import com.example.myapp.clicklinstener.itemClickListener
-import com.example.myapp.db.Notes
+import com.example.myapp.data.local.db.Notes
 
 
 class NotesAdapter(val list: List<Notes>, val itemClickListener: itemClickListener) : RecyclerView.Adapter<NotesAdapter.ViewHolder>() {

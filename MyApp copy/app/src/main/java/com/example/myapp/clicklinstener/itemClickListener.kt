@@ -1,6 +1,6 @@
 package com.example.myapp.clicklinstener
 
-import com.example.myapp.db.Notes
+import com.example.myapp.data.local.db.Notes
 
 
 interface itemClickListener {

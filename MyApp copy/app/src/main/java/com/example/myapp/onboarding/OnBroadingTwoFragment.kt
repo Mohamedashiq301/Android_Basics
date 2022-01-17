@@ -5,14 +5,14 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
+import android.widget.Button
 import androidx.fragment.app.Fragment
 import com.example.myapp.R
 
 class OnBroadingTwoFragment : Fragment() {
 
-    lateinit var textViewDone:TextView
-    lateinit var textViewBack:TextView
+    lateinit var buttonDone:Button
+    lateinit var buttonBack:Button
     lateinit var onOptionClick:OnOptionClick
 
 
@@ -32,20 +32,20 @@ class OnBroadingTwoFragment : Fragment() {
     }
 
     private fun bindViews(view: View) {
-        textViewDone=view.findViewById(R.id.textViewDone)
-        textViewBack=view.findViewById(R.id.textViewBack)
+        buttonDone=view.findViewById(R.id.buttonDone)
+        buttonBack=view.findViewById(R.id.buttonBack)
         clickListener()
     }
 
     private fun clickListener() {
-        textViewBack.setOnClickListener(object:View.OnClickListener{
+        buttonBack.setOnClickListener(object:View.OnClickListener{
             override fun onClick(v: View?) {
                 onOptionClick.onOptionBack()
             }
 
         })
 
-        textViewDone.setOnClickListener(object:View.OnClickListener{
+        buttonDone.setOnClickListener(object:View.OnClickListener{
             override fun onClick(v: View?) {
                 onOptionClick.onOptionDone()
             }

@@ -5,13 +5,13 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
+import android.widget.Button
 import androidx.fragment.app.Fragment
 import com.example.myapp.R
 
 class OnBroadingOneFragment : Fragment() {
 
-    lateinit var textViewNext:TextView
+    lateinit var buttonNext:Button
     lateinit var onNextClick: OnNextClick
 
     override fun onAttach(context: Context) {
@@ -30,12 +30,12 @@ class OnBroadingOneFragment : Fragment() {
     }
 
     private fun bindViews(view: View) {
-        textViewNext=view.findViewById(R.id.textViewNext)
+        buttonNext=view.findViewById(R.id.buttonNext)
         clickListener()
     }
 
     private fun clickListener() {
-        textViewNext.setOnClickListener(object : View.OnClickListener{
+        buttonNext.setOnClickListener(object : View.OnClickListener{
             override fun onClick(v: View?) {
                 onNextClick.onClick()
             }

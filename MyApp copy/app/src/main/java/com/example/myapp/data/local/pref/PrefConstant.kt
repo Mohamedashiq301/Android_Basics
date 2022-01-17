@@ -1,4 +1,4 @@
-package com.example.myapp.utils
+package com.example.myapp.data.local.pref
 
 object PrefConstant {
     val Shared_Preference_Notes = "NotesAppPerf"

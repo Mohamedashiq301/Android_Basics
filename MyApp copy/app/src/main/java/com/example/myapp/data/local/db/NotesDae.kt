@@ -1,4 +1,4 @@
-package com.example.myapp.db
+package com.example.myapp.data.local.db
 
 import androidx.room.*
 import androidx.room.OnConflictStrategy.REPLACE

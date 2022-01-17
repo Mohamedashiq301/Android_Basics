@@ -1,27 +1,41 @@
-package com.example.myapp.views
+package com.example.myapp.splash
 
 import android.content.Intent
 import android.content.SharedPreferences
 import android.os.Bundle
+import android.os.Handler
 import android.util.Log
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.example.myapp.R
+import com.example.myapp.data.local.pref.PrefConstant
 import com.example.myapp.onboarding.OnBroadingActivity
-import com.example.myapp.utils.PrefConstant
+import com.example.myapp.views.LoginActivity
+import com.example.myapp.views.MyNotesActivity
 import com.google.android.gms.tasks.OnCompleteListener
 import com.google.firebase.iid.FirebaseInstanceId
 
 class SplashActivity : AppCompatActivity() {
 
     lateinit var sharedPreferences: SharedPreferences
+    lateinit var handler: Handler
+    lateinit var runnable: Runnable
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_splash)
         setupSharedPreference()
-        checkLoginStatus()
-        getFCMToken()
+        goToNext()
+        //checkLoginStatus()
+        //getFCMToken()
+    }
+
+    private fun goToNext() {
+        handler= Handler()
+        runnable= Runnable {
+            checkLoginStatus()
+        }
+        handler.postDelayed(runnable,2000)
     }
 
     private fun getFCMToken() {
@@ -63,5 +77,10 @@ class SplashActivity : AppCompatActivity() {
             }
         }
         finish()
+    }
+
+    override fun onBackPressed() {
+        super.onBackPressed()
+        handler.removeCallbacks(runnable)
     }
 }
