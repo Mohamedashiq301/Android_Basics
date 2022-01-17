@@ -1,4 +1,4 @@
-package com.example.myapp.views
+package com.example.myapp.login
 
 import android.content.Intent
 import android.content.SharedPreferences
@@ -8,8 +8,10 @@ import android.widget.Button
 import android.widget.EditText
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import com.example.myapp.data.local.pref.PrefConstant
 import com.example.myapp.R
+import com.example.myapp.data.local.pref.PrefConstant
+import com.example.myapp.views.MyNotesActivity
+
 //import kotlinx.android.synthetic.main.activity_login.*
 
 class LoginActivity : AppCompatActivity() {
@@ -32,9 +34,9 @@ class LoginActivity : AppCompatActivity() {
     }
 
     private fun bindView() {
-        EditTextFullName = findViewById(R.id.EditTextFullName)
-        EditTextUserName = findViewById(R.id.EditTextUserName)
-        buttonLogin = findViewById(R.id.ButtonLogin)
+        EditTextFullName = findViewById(R.id.editTextFullName)
+        EditTextUserName = findViewById(R.id.editTextUserName)
+        buttonLogin = findViewById(R.id.buttonlogin)
 
         val clickAction = object : View.OnClickListener {
             override fun onClick(v: View?) {

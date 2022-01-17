@@ -10,7 +10,7 @@ import androidx.appcompat.app.AppCompatActivity
 import com.example.myapp.R
 import com.example.myapp.data.local.pref.PrefConstant
 import com.example.myapp.onboarding.OnBroadingActivity
-import com.example.myapp.views.LoginActivity
+import com.example.myapp.login.LoginActivity
 import com.example.myapp.views.MyNotesActivity
 import com.google.android.gms.tasks.OnCompleteListener
 import com.google.firebase.iid.FirebaseInstanceId

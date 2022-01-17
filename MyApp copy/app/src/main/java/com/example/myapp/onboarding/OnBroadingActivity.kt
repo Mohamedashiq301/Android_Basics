@@ -7,7 +7,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.viewpager2.widget.ViewPager2
 import com.example.myapp.R
 import com.example.myapp.data.local.pref.PrefConstant
-import com.example.myapp.views.LoginActivity
+import com.example.myapp.login.LoginActivity
 
 class OnBroadingActivity : AppCompatActivity(),OnBroadingOneFragment.OnNextClick,OnBroadingTwoFragment.OnOptionClick {
     companion object{
@@ -48,7 +48,7 @@ class OnBroadingActivity : AppCompatActivity(),OnBroadingOneFragment.OnNextClick
         editor.putBoolean(PrefConstant.ON_BOARDED_SUCCESSFULLY,true)
         editor.apply()
 
-        val intent=Intent(this,LoginActivity::class.java)
+        val intent=Intent(this, LoginActivity::class.java)
         startActivity(intent)
     }
 }

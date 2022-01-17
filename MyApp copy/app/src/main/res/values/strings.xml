@@ -10,4 +10,8 @@
     <string name="add_notes_with_image_either_from_camera_or_gallery">Add notes with Image either from Camera or Gallery</string>
     <string name="back">Back</string>
     <string name="done">Done</string>
+    <string name="welcome">Welcome</string>
+    <string name="plan_and_record_your_todo_on_your_phone">Plan and record your todo on your phone</string>
+    <string name="fullname">FullName</string>
+    <string name="username">username</string>
 </resources>
