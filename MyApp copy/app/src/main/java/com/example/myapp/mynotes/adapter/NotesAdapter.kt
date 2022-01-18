@@ -1,4 +1,4 @@
-package com.example.myapp.Adapter
+package com.example.myapp.mynotes.adapter
 
 import android.view.LayoutInflater
 import android.view.View
@@ -10,8 +10,8 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.myapp.R
-import com.example.myapp.clicklinstener.itemClickListener
 import com.example.myapp.data.local.db.Notes
+import com.example.myapp.mynotes.clicklinstener.itemClickListener
 
 
 class NotesAdapter(val list: List<Notes>, val itemClickListener: itemClickListener) : RecyclerView.Adapter<NotesAdapter.ViewHolder>() {
@@ -21,7 +21,7 @@ class NotesAdapter(val list: List<Notes>, val itemClickListener: itemClickListen
         return ViewHolder(view)
     }
 
-    override fun onBindViewHolder(holder: NotesAdapter.ViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val notes = list[position]  //list.getpostion()
         val title = notes.title
         val description = notes.description

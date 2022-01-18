@@ -1,4 +1,4 @@
-package com.example.myapp.views
+package com.example.myapp.mynotes
 
 import android.app.Activity
 import android.content.Intent
@@ -16,14 +16,17 @@ import androidx.recyclerview.widget.RecyclerView
 import androidx.work.Constraints
 import androidx.work.PeriodicWorkRequest
 import androidx.work.WorkManager
-import com.example.myapp.Adapter.NotesAdapter
+import com.example.myapp.mynotes.adapter.NotesAdapter
 import com.example.myapp.NotesApp
 import com.example.myapp.R
-import com.example.myapp.utils.WorkManager.MyWorker
-import com.example.myapp.clicklinstener.itemClickListener
+import com.example.myapp.mynotes.clicklinstener.itemClickListener
 import com.example.myapp.data.local.db.Notes
-import com.example.myapp.utils.AppConstant
 import com.example.myapp.data.local.pref.PrefConstant
+import com.example.myapp.utils.AppConstant
+import com.example.myapp.utils.WorkManager.MyWorker
+import com.example.myapp.addnotes.AddNotesActivity
+import com.example.myapp.blog.BlogActivity
+import com.example.myapp.detail.DetailActivity
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import java.util.concurrent.TimeUnit
 
@@ -204,7 +207,7 @@ class MyNotesActivity :AppCompatActivity(){
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         if (item.itemId==R.id.blog){
             Log.d(TAG,"Click successfull")
-            val intent=Intent(this,BlogActivity::class.java)
+            val intent=Intent(this, BlogActivity::class.java)
             startActivity(intent)
         }
         return super.onOptionsItemSelected(item)

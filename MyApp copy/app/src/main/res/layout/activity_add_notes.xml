@@ -2,10 +2,11 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
+    android:background="@android:color/white"
     android:layout_height="match_parent">
 
     <ImageView
-        android:layout_width="150dp"
+        android:layout_width="0dp"
         android:layout_height="150dp"
         android:id="@+id/imageviewEditor"
         app:layout_constraintStart_toStartOf="parent"
@@ -13,7 +14,7 @@
         app:layout_constraintTop_toBottomOf="@+id/TextView"
         android:layout_marginTop="20dp"
         android:layout_marginBottom="20dp"
-        android:src="@mipmap/ic_launcher"/>
+        android:src="@drawable/ic_image_selector"/>
 
     <TextView
         android:id="@+id/TextView"
@@ -21,8 +22,10 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
         android:layout_marginEnd="16dp"
-        android:hint="Add Notes"
+        android:hint="@string/select_image"
         android:textAlignment="center"
+        android:textColor="@android:color/darker_gray"
+        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
         android:textSize="20dp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
@@ -31,7 +34,7 @@
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/TextInputTitle"
-        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox.Dense"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
@@ -44,19 +47,24 @@
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/EditTextTitle"
+            android:textColor="@android:color/black"
+            android:ems="10"
+            android:inputType="text"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/TextInputDescription"
-        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox.Dense"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="0dp"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="16dp"
         android:layout_marginEnd="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="8dp"
         android:hint="Description"
+        app:layout_constraintBottom_toTopOf="@+id/SubmitButton"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/TextInputTitle">
@@ -64,21 +72,26 @@
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/EditTextDescription"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="match_parent"
+            android:ems="10"
+            android:inputType="text"
+            android:textColor="@android:color/black" />
     </com.google.android.material.textfield.TextInputLayout>
+
 
     <Button
         android:id="@+id/SubmitButton"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:backgroundTint="@android:color/black"
+        android:textColor="@android:color/white"
+        android:text="Submit"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
-        android:hint="Submit"
-        android:textColor="@color/design_default_color_primary_dark"
+        android:layout_marginBottom="8dp"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/TextInputDescription"></Button>
+        app:layout_constraintStart_toStartOf="parent" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

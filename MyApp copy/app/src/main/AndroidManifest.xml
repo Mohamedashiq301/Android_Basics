@@ -23,7 +23,7 @@
 
         </activity>
         <activity
-            android:name=".views.BlogActivity"
+            android:name=".blog.BlogActivity"
             android:exported="false" />
 
         <provider
@@ -44,7 +44,8 @@
         </service>
 
         <activity
-            android:name=".views.AddNotesActivity"
+            android:name=".addnotes.AddNotesActivity"
+            android:theme="@style/NoToolbar"
             android:exported="false" />
         <activity
             android:name=".splash.SplashActivity"
@@ -58,9 +59,8 @@
         </activity>
         <activity android:name=".login.LoginActivity"
             android:theme="@style/NoToolbar"/>
-        <activity android:name=".views.MainActivity" />
-        <activity android:name=".views.DetailActivity" />
-        <activity android:name=".views.MyNotesActivity" />
+        <activity android:name=".detail.DetailActivity" />
+        <activity android:name=".mynotes.MyNotesActivity" />
     </application>
 
 </manifest>

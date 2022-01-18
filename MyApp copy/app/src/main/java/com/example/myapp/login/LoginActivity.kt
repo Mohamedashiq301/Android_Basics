@@ -10,7 +10,7 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.example.myapp.R
 import com.example.myapp.data.local.pref.PrefConstant
-import com.example.myapp.views.MyNotesActivity
+import com.example.myapp.mynotes.MyNotesActivity
 
 //import kotlinx.android.synthetic.main.activity_login.*
 

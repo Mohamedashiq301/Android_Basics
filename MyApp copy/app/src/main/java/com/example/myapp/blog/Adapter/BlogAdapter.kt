@@ -1,4 +1,4 @@
-package com.example.myapp.Adapter
+package com.example.myapp.blog.Adapter
 
 import android.util.Log
 import android.view.LayoutInflater

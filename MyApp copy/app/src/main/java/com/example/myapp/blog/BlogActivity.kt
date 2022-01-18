@@ -1,4 +1,4 @@
-package com.example.myapp.views
+package com.example.myapp.blog
 
 import android.os.Bundle
 import android.util.Log
@@ -9,8 +9,8 @@ import com.androidnetworking.AndroidNetworking
 import com.androidnetworking.common.Priority
 import com.androidnetworking.error.ANError
 import com.androidnetworking.interfaces.ParsedRequestListener
-import com.example.myapp.Adapter.BlogAdapter
 import com.example.myapp.R
+import com.example.myapp.blog.Adapter.BlogAdapter
 import com.example.myapp.model.JsonResponse
 
 

@@ -74,9 +74,9 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
-        android:backgroundTint="@android:color/darker_gray"
+        android:backgroundTint="@android:color/black"
         android:textColor="@android:color/white"
-        android:hint="LOGIN"
+        android:text="login"
         app:layout_constraintEnd_toEndOf="@+id/usernameContainer"
         app:layout_constraintStart_toStartOf="@+id/usernameContainer"
         app:layout_constraintTop_toBottomOf="@+id/usernameContainer" />

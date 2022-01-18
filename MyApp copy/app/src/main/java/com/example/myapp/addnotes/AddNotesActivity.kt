@@ -1,18 +1,13 @@
-package com.example.myapp.views
+package com.example.myapp.addnotes
 
 import android.app.Activity
-import android.app.AlertDialog
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Bundle
 import android.os.Environment
 import android.provider.MediaStore
-import android.view.LayoutInflater
 import android.view.View
-import android.widget.Button
-import android.widget.EditText
-import android.widget.ImageView
-import android.widget.TextView
+import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
@@ -20,20 +15,24 @@ import androidx.core.content.FileProvider
 import com.bumptech.glide.Glide
 import com.example.myapp.BuildConfig
 import com.example.myapp.R
+import com.example.myapp.addnotes.bottomsheet.FileSelectorFragment
 import com.example.myapp.utils.AppConstant
 import java.io.File
+import java.io.IOException
 import java.util.*
 
 
-class AddNotesActivity : AppCompatActivity() {
+class AddNotesActivity : AppCompatActivity(),onOptionClickListener {
+    companion object {
+        private const val REQUEST_CODE_GALLERY = 2
+        private const val REQUEST_CODE_CAMERA = 1
+        private const val MY_PERMISSION_CODE = 124
+    }
+
     lateinit var EditTextTitle: EditText
     lateinit var EditTextDescription: TextView
     lateinit var submitButton: Button
     lateinit var imageviewEditor: ImageView
-
-    val REQUEST_CODE_GALLERY = 2
-    val REQUEST_CODE_CAMERA = 1
-    val MY_PERMISSION_CODE = 124
     var picturePath = ""
     lateinit var imageLocation: File
 
@@ -47,23 +46,32 @@ class AddNotesActivity : AppCompatActivity() {
     private fun clickListener() {
         submitButton.setOnClickListener(object : View.OnClickListener {
             override fun onClick(v: View?) {
-                val intent = Intent()
-                intent.putExtra(AppConstant.TITLE, EditTextTitle.text.toString())
-                intent.putExtra(AppConstant.DESCRIPTION, EditTextDescription.text.toString())
-                intent.putExtra(AppConstant.imagePath,picturePath)
-                setResult(Activity.RESULT_OK, intent)
-                finish()
+                if (EditTextTitle.text.toString().isNotEmpty() && EditTextDescription.text.toString().isNotEmpty()) {
+                    val intent = Intent()
+                    intent.putExtra(AppConstant.TITLE, EditTextTitle.text.toString())
+                    intent.putExtra(AppConstant.DESCRIPTION, EditTextDescription.text.toString())
+                    intent.putExtra(AppConstant.imagePath, picturePath)
+                    setResult(Activity.RESULT_OK, intent)
+                    finish()
+                }else{
+                    Toast.makeText(this@AddNotesActivity,getString(R.string.empty_string),Toast.LENGTH_SHORT).show()
+                }
             }
 
         })
         imageviewEditor.setOnClickListener(object : View.OnClickListener {
             override fun onClick(v: View?) {
                 if (checkAndRequestPermission()) {
-                    setupDialog()
+                    openPicker()
                 }
             }
 
         })
+    }
+
+    private fun openPicker() {
+        val dialog=FileSelectorFragment.newInstance()
+        dialog.show(supportFragmentManager,FileSelectorFragment.TAG)
     }
 
     private fun checkAndRequestPermission(): Boolean {
@@ -89,74 +97,13 @@ class AddNotesActivity : AppCompatActivity() {
         when (requestCode) {
             MY_PERMISSION_CODE -> {
                 if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                    setupDialog()
+                    openPicker()
                 }
             }
         }
     }
 
-    private fun setupDialog() {
-        val view = LayoutInflater.from(this@AddNotesActivity).inflate(R.layout.dialog_selector, null)
-        val textViewCamera = view.findViewById<TextView>(R.id.textViewCamera)
-        val textViewGallery = view.findViewById<TextView>(R.id.textViewGallery)
-        val dialog = AlertDialog.Builder(this)
-                .setView(view)
-                .setCancelable(true)
-                .create()
 
-
-        textViewCamera.setOnClickListener(object : View.OnClickListener {
-            override fun onClick(v: View?) {
-                val takePictureIntent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
-                if (takePictureIntent.resolveActivity(packageManager) != null) {
-                    var photoFile: File? = null
-
-                    try {
-                        photoFile = createImageFile()
-                    } catch (e: Exception) {
-
-                    }
-//                    val resultActivity = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
-//                        val bitmap = it?.data?.extras?.get("data") as Bitmap
-//                        imageviewEditor.setImageBitmap(bitmap)
-//                        picturePath=imageLocation?.path.toString()
-//                        Glide.with(this@AddNotesActivity).load(imageLocation.absoluteFile).into(imageviewEditor)
-//                    }
-
-                    if (photoFile != null) {
-                        val photoUri = FileProvider.getUriForFile(this@AddNotesActivity,
-                                BuildConfig.APPLICATION_ID + ".provider",
-                                photoFile)
-                        imageLocation = photoFile
-                        takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoUri)
-                        dialog.hide()
-                        startActivityForResult(takePictureIntent, REQUEST_CODE_CAMERA)
-                        //resultActivity.launch(intent)
-                    }
-                }
-            }
-        })
-
-//        val startForResult = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
-//            val bitmap = it?.data?.extras?.get("data") as Bitmap
-//            imageviewEditor.setImageBitmap(bitmap)
-//            var selectImage = intent?.data
-//            picturePath=selectImage.toString()
-//            Glide.with(this).load(selectImage?.path).into(imageviewEditor)
-//        }
-
-        textViewGallery.setOnClickListener(object : View.OnClickListener {
-            override fun onClick(v: View?) {
-                val intent = Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
-                startActivityForResult(intent, REQUEST_CODE_GALLERY)
-
-//                val intent = Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
-//                startForResult.launch(intent)
-                dialog.hide()
-            }
-        })
-        dialog.show()
-    }
 
     private fun createImageFile(): File? {
         val timeStamp = java.text.SimpleDateFormat("yyyyMMddHHmmss").format(Date())
@@ -189,4 +136,37 @@ class AddNotesActivity : AppCompatActivity() {
             }
         }
     }
+
+    override fun onCameraClick() {
+        val takePictureIntent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
+        if (takePictureIntent.resolveActivity(packageManager) != null) {
+            var photoFile: File? = null
+
+            try {
+                photoFile = createImageFile()
+            } catch (e: IOException) {
+
+            }
+
+            if (photoFile != null) {
+                val photoUri = FileProvider.getUriForFile(this@AddNotesActivity,
+                        BuildConfig.APPLICATION_ID + ".provider",
+                        photoFile)
+                imageLocation = photoFile
+                takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoUri)
+                startActivityForResult(takePictureIntent, REQUEST_CODE_CAMERA)
+                //resultActivity.launch(intent)
+            }
+        }
+    }
+
+
+    override fun onGalleryClick() {
+        val intent = Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
+        startActivityForResult(intent, REQUEST_CODE_GALLERY)
+    }
+}
+interface onOptionClickListener{
+    fun onCameraClick()
+    fun onGalleryClick()
 }

@@ -1,4 +1,4 @@
-package com.example.myapp.views
+package com.example.myapp.detail
 
 import android.os.Bundle
 import android.widget.TextView

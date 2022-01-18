@@ -11,7 +11,7 @@ import com.example.myapp.R
 import com.example.myapp.data.local.pref.PrefConstant
 import com.example.myapp.onboarding.OnBroadingActivity
 import com.example.myapp.login.LoginActivity
-import com.example.myapp.views.MyNotesActivity
+import com.example.myapp.mynotes.MyNotesActivity
 import com.google.android.gms.tasks.OnCompleteListener
 import com.google.firebase.iid.FirebaseInstanceId
 

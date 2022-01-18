@@ -14,4 +14,9 @@
     <string name="plan_and_record_your_todo_on_your_phone">Plan and record your todo on your phone</string>
     <string name="fullname">FullName</string>
     <string name="username">username</string>
+    <string name="select_image">Select Image</string>
+    <string name="empty_string">Fields cannot be empty</string>
+    <string name="gallery">Gallery</string>
+    <string name="camera">Camera</string>
+    <string name="select_picker">Select Picker</string>
 </resources>
